@@ -47,7 +47,11 @@ pub fn app() -> Node {
 
 /// HTML component for the calculator form.
 pub fn calculator_form() -> Node {
-  html.form([attr.class("max-w-sm mx-auto")], [age_select(), weight_input()])
+  html.form([attr.class("max-w-sm mx-auto")], [
+    age_select(),
+    weight_input(),
+    meals_input(),
+  ])
 }
 
 /// Age select box HTML component.
@@ -98,6 +102,32 @@ fn weight_input() -> Node {
       attr.Attr("max", "250"),
       attr.Attr("step", "0.01"),
       attr.placeholder("15"),
+      attr.required("true"),
+      attr.class(
+        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-300 focus:border-red-500 block w-full p-2.5",
+      ),
+    ]),
+  ])
+}
+
+/// Meals input HTML component.
+fn meals_input() -> Node {
+  html.div([attr.class("mb-8")], [
+    html.label(
+      [
+        attr.for("meals"),
+        attr.class("block mb-2 text-sm font-medium text-gray-900"),
+      ],
+      [html.Text("Daily meals")],
+    ),
+    html.input([
+      attr.name("meals"),
+      attr.id("meals"),
+      attr.type_("number"),
+      attr.Attr("min", "1"),
+      attr.Attr("max", "10"),
+      attr.Attr("step", "1"),
+      attr.placeholder("2"),
       attr.required("true"),
       attr.class(
         "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-300 focus:border-red-500 block w-full p-2.5",
