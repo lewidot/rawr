@@ -47,7 +47,7 @@ pub fn app() -> Node {
 
 /// HTML component for the calculator form.
 pub fn calculator_form() -> Node {
-  html.form([attr.class("max-w-sm mx-auto")], [age_select()])
+  html.form([attr.class("max-w-sm mx-auto")], [age_select(), weight_input()])
 }
 
 /// Age select box HTML component.
@@ -77,5 +77,31 @@ fn age_select() -> Node {
         html.option([attr.selected()], [html.Text("12 months +")]),
       ],
     ),
+  ])
+}
+
+/// Weight input HTML component.
+fn weight_input() -> Node {
+  html.div([attr.class("mb-5")], [
+    html.label(
+      [
+        attr.for("weight"),
+        attr.class("block mb-2 text-sm font-medium text-gray-900"),
+      ],
+      [html.Text("Weight (kg)")],
+    ),
+    html.input([
+      attr.name("weight"),
+      attr.id("weight"),
+      attr.type_("number"),
+      attr.Attr("min", "0.01"),
+      attr.Attr("max", "250"),
+      attr.Attr("step", "0.01"),
+      attr.placeholder("15"),
+      attr.required("true"),
+      attr.class(
+        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-300 focus:border-red-500 block w-full p-2.5",
+      ),
+    ]),
   ])
 }
