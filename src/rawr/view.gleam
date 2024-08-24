@@ -1,8 +1,8 @@
 import nakai/attr
 import nakai/html.{type Node}
 
-/// Main application HTML view.
-pub fn app(children: List(Node)) -> Node {
+/// Base HTML layout.
+pub fn base(children: List(Node)) -> Node {
   html.Html([attr.lang("en")], [
     html.Head([
       html.link([attr.rel("preconnect"), attr.href("https://rsms.me/")]),
@@ -17,11 +17,15 @@ pub fn app(children: List(Node)) -> Node {
       ]),
       html.title("Rawr!"),
     ]),
-    html.Body([], [
-      html.h1_text([attr.class("text-4xl")], "This is the heading!"),
-      calculator_form(),
-      ..children
-    ]),
+    html.Body([attr.class("bg-white h-screen")], children),
+  ])
+}
+
+/// Main application HTML view.
+pub fn app() -> Node {
+  base([
+    html.h1_text([attr.class("text-4xl")], "This is the heading!"),
+    calculator_form(),
   ])
 }
 

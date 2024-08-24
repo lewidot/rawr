@@ -20,7 +20,7 @@ pub fn handle_request(req: wisp.Request) -> wisp.Response {
 fn root_handler(req: wisp.Request) -> wisp.Response {
   use <- wisp.require_method(req, http.Get)
 
-  view.app([])
+  view.app()
   |> nakai.to_string_builder()
   |> wisp.html_response(200)
 }
