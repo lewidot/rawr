@@ -1,5 +1,6 @@
 import nakai/attr
 import nakai/html.{type Node}
+import rawr/age
 
 /// Base HTML layout.
 pub fn base(children: List(Node)) -> Node {
@@ -88,11 +89,11 @@ fn age_select() -> Node {
         ),
       ],
       [
-        html.option([], [html.Text("0 to 4 months")]),
-        html.option([], [html.Text("5 to 6 months")]),
-        html.option([], [html.Text("7 to 9 months")]),
-        html.option([], [html.Text("10 to 11 months")]),
-        html.option([attr.selected()], [html.Text("12 months +")]),
+        html.option([], [html.Text(age.zero_to_four)]),
+        html.option([], [html.Text(age.five_to_six)]),
+        html.option([], [html.Text(age.seven_to_nine)]),
+        html.option([], [html.Text(age.ten_to_eleven)]),
+        html.option([attr.selected()], [html.Text(age.greater_than_twelve)]),
       ],
     ),
   ])
