@@ -1,5 +1,6 @@
 import gleam/http
 import gleam/io
+import gleam/string
 import nakai
 import nakai/html
 import rawr/calculator
@@ -35,8 +36,15 @@ fn calculate_handler(req: wisp.Request) -> wisp.Response {
 
   use form <- wisp.require_form(req)
 
+  io.debug(form.values)
   case form.values {
     [#("age", age), #("meals", meals), #("weight", weight)] -> {
+      // Check if the weight has decimal places so we can cast it to a float. TODO Dynamic may work better here
+      let weight = case string.contains(does: weight, contain: ".") {
+        True -> weight
+        False -> weight <> ".00"
+      }
+
       case calculator.new(age, weight, meals) {
         Ok(c) -> {
           io.debug(c)
