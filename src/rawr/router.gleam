@@ -31,7 +31,22 @@ fn root_handler(req: wisp.Request) -> wisp.Response {
 fn calculate_handler(req: wisp.Request) -> wisp.Response {
   use <- wisp.require_method(req, http.Post)
 
-  html.p_text([], "Is HTMX working?!")
-  |> nakai.to_string_builder()
-  |> wisp.html_response(200)
+  use form <- wisp.require_form(req)
+
+  case form.values {
+    [#("age", age), #("meals", meals), #("weight", weight)] -> {
+      html.div([], [
+        html.p_text([], "age: " <> age),
+        html.p_text([], "weight: " <> weight),
+        html.p_text([], "meals: " <> meals),
+      ])
+      |> nakai.to_string_builder()
+      |> wisp.html_response(200)
+    }
+    _ -> {
+      html.p_text([], "That didn't work!")
+      |> nakai.to_string_builder()
+      |> wisp.html_response(200)
+    }
+  }
 }
