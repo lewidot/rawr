@@ -774,6 +774,10 @@ select {
   margin-inline-end: 0.5rem;
 }
 
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
 .block {
   display: block;
 }

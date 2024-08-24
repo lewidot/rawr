@@ -5,16 +5,26 @@ import nakai/html.{type Node}
 pub fn base(children: List(Node)) -> Node {
   html.Html([attr.lang("en")], [
     html.Head([
+      html.meta([
+        attr.name("viewport"),
+        attr.content("width=device-width, initial-scale=1.0"),
+      ]),
       html.link([attr.rel("preconnect"), attr.href("https://rsms.me/")]),
       html.link([
         attr.rel("stylesheet"),
         attr.href("https://rsms.me/inter/inter.css"),
       ]),
       html.link([attr.rel("stylesheet"), attr.href("/static/style.css")]),
-      html.meta([
-        attr.name("viewport"),
-        attr.content("width=device-width, initial-scale=1.0"),
-      ]),
+      html.Script(
+        [
+          attr.src("https://unpkg.com/htmx.org@2.0.2"),
+          attr.integrity(
+            "sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ",
+          ),
+          attr.crossorigin("anonymous"),
+        ],
+        "",
+      ),
       html.title("Rawr!"),
     ]),
     html.Body([attr.class("bg-white h-screen")], children),
@@ -42,17 +52,20 @@ pub fn app() -> Node {
       ],
     ),
     calculator_form(),
+    html.div([attr.class("max-w-sm mx-auto mt-10"), attr.id("results")], []),
   ])
 }
 
 /// HTML component for the calculator form.
 pub fn calculator_form() -> Node {
-  html.form([attr.class("max-w-sm mx-auto")], [
-    age_select(),
-    weight_input(),
-    meals_input(),
-    calculate_button(),
-  ])
+  html.form(
+    [
+      attr.class("max-w-sm mx-auto"),
+      attr.Attr("hx-post", "/calculate"),
+      attr.Attr("hx-target", "#results"),
+    ],
+    [age_select(), weight_input(), meals_input(), calculate_button()],
+  )
 }
 
 /// Age select box HTML component.
