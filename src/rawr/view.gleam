@@ -51,6 +51,7 @@ pub fn calculator_form() -> Node {
     age_select(),
     weight_input(),
     meals_input(),
+    calculate_button(),
   ])
 }
 
@@ -133,5 +134,20 @@ fn meals_input() -> Node {
         "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-300 focus:border-red-500 block w-full p-2.5",
       ),
     ]),
+  ])
+}
+
+/// Calculate button HTML component.
+fn calculate_button() -> Node {
+  html.div([attr.class("mb-5")], [
+    html.button_text(
+      [
+        attr.type_("submit"),
+        attr.class(
+          "text-white text-lg bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-full",
+        ),
+      ],
+      "Calculate",
+    ),
   ])
 }
