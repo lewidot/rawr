@@ -1,0 +1,11 @@
+# flyctl launch added from .gitignore
+**/*.beam
+**/*.ez
+build
+**/erl_crash.dump
+**/node_modules
+**/*.DS_Store
+
+# flyctl launch added from node_modules/tailwindcss/stubs/.gitignore
+!node_modules/tailwindcss/stubs/**/*
+fly.toml
