@@ -16,6 +16,7 @@ pub type Age {
   GreaterThanTwelve
 }
 
+/// Construct Age from a string.
 pub fn from_string(age: String) -> Result(Age, Nil) {
   case age {
     "0 to 4 months" -> Ok(ZeroToFour)
@@ -24,5 +25,16 @@ pub fn from_string(age: String) -> Result(Age, Nil) {
     "10 to 11 months" -> Ok(TenToEleven)
     "12 months +" -> Ok(GreaterThanTwelve)
     _ -> Error(Nil)
+  }
+}
+
+/// List of percentages for a given age.
+pub fn percentages(age: Age) -> List(Int) {
+  case age {
+    ZeroToFour -> [8, 10]
+    FiveToSix -> [6, 8]
+    SevenToNine -> [4, 6]
+    TenToEleven -> [3, 4]
+    GreaterThanTwelve -> [2, 3]
   }
 }
