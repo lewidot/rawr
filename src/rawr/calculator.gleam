@@ -1,7 +1,5 @@
 import gleam/float
 import gleam/int
-import gleam/io
-import gleam/list
 import gleam/result
 import gleam/string
 import rawr/age.{type Age}
@@ -30,16 +28,27 @@ pub fn new(
 }
 
 /// Calculate daily amounts based on the weight and the percentages.
-fn daily_amounts(calculator: Calculator) -> List(Float) {
+fn daily_amounts(calculator: Calculator) -> #(Float, Float) {
   let weight_g = calculator.weight *. 10.0
+  let percentages = age.percentages(calculator.age)
 
-  list.map(age.percentages(calculator.age), fn(p) {
-    int.to_float(p) *. weight_g
-  })
+  #(
+    int.to_float(percentages.0) *. weight_g,
+    int.to_float(percentages.1) *. weight_g,
+  )
 }
 
 /// Calculate the amount per meal.
-pub fn calculate(calculator: Calculator) -> List(Float) {
-  daily_amounts(calculator)
-  |> list.map(fn(a) { a /. int.to_float(calculator.meals) })
+pub fn calculate(calculator: Calculator) -> #(Int, Int) {
+  // cast meals from int to float
+  let meals = int.to_float(calculator.meals)
+
+  // calculate daily amounts
+  let daily = daily_amounts(calculator)
+
+  // calculate the meal amounts and round to an int
+  let lower = float.round(daily.0 /. meals)
+  let upper = float.round(daily.1 /. meals)
+
+  #(lower, upper)
 }

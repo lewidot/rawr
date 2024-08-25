@@ -1,8 +1,5 @@
-import gleam/float
 import gleam/http
-import gleam/io
-import gleam/list
-import gleam/string
+import gleam/int
 import nakai
 import nakai/html
 import rawr/calculator
@@ -38,22 +35,22 @@ fn calculate_handler(req: wisp.Request) -> wisp.Response {
 
   use form <- wisp.require_form(req)
 
-  io.debug(form.values)
   case form.values {
     [#("age", age), #("meals", meals), #("weight", weight)] -> {
       case calculator.new(age, weight, meals) {
         Ok(c) -> {
-          io.debug(c)
+          // calculate
           let result = calculator.calculate(c)
-          let assert Ok(first) = list.first(result)
-          let assert Ok(second) = list.last(result)
+
           html.div([], [
             html.p_text(
               [],
               "recommended amount per meal: "
-                <> float.to_string(first)
-                <> " - "
-                <> float.to_string(second),
+                <> int.to_string(result.0)
+                <> "g"
+                <> " to "
+                <> int.to_string(result.1)
+                <> "g",
             ),
           ])
           |> nakai.to_string_builder()

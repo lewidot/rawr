@@ -28,13 +28,13 @@ pub fn from_string(age: String) -> Result(Age, Nil) {
   }
 }
 
-/// List of percentages for a given age.
-pub fn percentages(age: Age) -> List(Int) {
+/// Tuple of percentages for a given age.
+pub fn percentages(age: Age) -> #(Int, Int) {
   case age {
-    ZeroToFour -> [8, 10]
-    FiveToSix -> [6, 8]
-    SevenToNine -> [4, 6]
-    TenToEleven -> [3, 4]
-    GreaterThanTwelve -> [2, 3]
+    ZeroToFour -> #(8, 10)
+    FiveToSix -> #(6, 8)
+    SevenToNine -> #(4, 6)
+    TenToEleven -> #(3, 4)
+    GreaterThanTwelve -> #(2, 3)
   }
 }
