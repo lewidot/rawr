@@ -22,5 +22,5 @@ cpu_kind = 'shared'
 cpus = 1
 
 [[statics]]
-guest_path = "/rawr/priv/static"
+guest_path = "/app/rawr/priv/static"
 url_prefix = "/static"
