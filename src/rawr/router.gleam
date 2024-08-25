@@ -1,5 +1,7 @@
+import gleam/float
 import gleam/http
 import gleam/io
+import gleam/list
 import gleam/string
 import nakai
 import nakai/html
@@ -39,19 +41,20 @@ fn calculate_handler(req: wisp.Request) -> wisp.Response {
   io.debug(form.values)
   case form.values {
     [#("age", age), #("meals", meals), #("weight", weight)] -> {
-      // Check if the weight has decimal places so we can cast it to a float. TODO Dynamic may work better here
-      let weight = case string.contains(does: weight, contain: ".") {
-        True -> weight
-        False -> weight <> ".00"
-      }
-
       case calculator.new(age, weight, meals) {
         Ok(c) -> {
           io.debug(c)
+          let result = calculator.calculate(c)
+          let assert Ok(first) = list.first(result)
+          let assert Ok(second) = list.last(result)
           html.div([], [
-            html.p_text([], "age: " <> age),
-            html.p_text([], "weight: " <> weight),
-            html.p_text([], "meals: " <> meals),
+            html.p_text(
+              [],
+              "recommended amount per meal: "
+                <> float.to_string(first)
+                <> " - "
+                <> float.to_string(second),
+            ),
           ])
           |> nakai.to_string_builder()
           |> wisp.html_response(200)
