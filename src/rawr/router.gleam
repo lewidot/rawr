@@ -53,7 +53,7 @@ fn calculate_handler(req: wisp.Request) -> wisp.Response {
                 <> "g",
             ),
           ])
-          |> nakai.to_string_builder()
+          |> nakai.to_inline_string_builder()
           |> wisp.html_response(200)
         }
         Error(_) -> {
