@@ -16,7 +16,6 @@ pub fn new(
   meals: String,
 ) -> Result(Calculator, Nil) {
   use age <- result.try(age.from_string(age))
-  io.debug(age)
 
   // Check if the weight has decimal places so we can cast it to a float. TODO Dynamic may work better here
   let weight = case string.contains(does: weight, contain: ".") {
@@ -25,9 +24,7 @@ pub fn new(
   }
 
   use weight <- result.try(float.parse(weight))
-  io.debug(weight)
   use meals <- result.try(int.parse(meals))
-  io.debug(meals)
 
   Ok(Calculator(age, weight, meals))
 }
